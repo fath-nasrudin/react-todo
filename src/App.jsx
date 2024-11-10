@@ -7,8 +7,9 @@ import {
   useProjectDispatch,
 } from './reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
+import { PanelLeftIcon } from 'lucide-react';
 
-const Leftbar = () => {
+const Leftbar = ({ showLeftbar, setShowLeftbar }) => {
   const [showForm, setShowForm] = useState(false);
   const allProjects = useProjectState();
   const dispatchProject = useProjectDispatch();
@@ -25,7 +26,21 @@ const Leftbar = () => {
         />
       )}
 
-      <div className="hidden sm:block basis-[300px] grow-0 shrink-0 bg-gray-100 pt-8">
+      <div
+        className={`hidden ${
+          showLeftbar ? 'sm:block' : ''
+        } basis-[300px] grow-0 shrink-0 bg-gray-100`}
+      >
+        {/* leftbar header */}
+        <div className="p-4 flex">
+          <div className="text-xl font-semibold mr-auto">User</div>
+
+          {showLeftbar && (
+            <button onClick={() => setShowLeftbar((prev) => !prev)}>
+              <PanelLeftIcon strokeWidth={1} />
+            </button>
+          )}
+        </div>
         <Tablist tabsData={defaultTabs} />
 
         <div className="mt-8">
@@ -47,19 +62,30 @@ const Leftbar = () => {
   );
 };
 
-const Mainbar = () => {
+const Mainbar = ({ showLeftbar, setShowLeftbar }) => {
   return (
     <div className="flex-1 p-4">
+      <div className="flex gap-4 items-center">
+        <button
+          className={`block ${showLeftbar ? 'sm:hidden' : ''}`}
+          onClick={() => setShowLeftbar((prev) => !prev)}
+        >
+          <PanelLeftIcon />
+        </button>
+
+        <div className="text-2xl font-bold text-red-400">ReactTodo</div>
+      </div>
       <TaskList />
     </div>
   );
 };
 
 function App() {
+  const [showLeftbar, setShowLeftbar] = useState(true);
   return (
     <div className="flex min-h-screen">
-      <Leftbar />
-      <Mainbar />
+      <Leftbar showLeftbar={showLeftbar} setShowLeftbar={setShowLeftbar} />
+      <Mainbar setShowLeftbar={setShowLeftbar} showLeftbar={showLeftbar} />
     </div>
   );
 }
