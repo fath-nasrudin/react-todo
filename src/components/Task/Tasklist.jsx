@@ -13,7 +13,7 @@ export const TaskList = () => {
 
   const filteredTasks = tasks.filter((item) => item.projectId === activeTab);
   return (
-    <div className="mt-8">
+    <div className="mt-8 max-w-screen-md mx-auto">
       <div className="text-3xl font-bold">{currentTab.name}</div>
       <ul>
         {filteredTasks.length ? (
