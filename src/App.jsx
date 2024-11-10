@@ -9,6 +9,7 @@ import {
   createInitialProjectState,
   useProjectState,
   useProjectDispatch,
+  useDefaultTabId,
 } from '../reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
 
@@ -68,7 +69,7 @@ const Mainbar = ({ activeTab }) => {
 };
 
 function App() {
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState(useDefaultTabId());
 
   const handleTabClick = (e) => {
     setActiveTab(e.target.dataset.tabid);

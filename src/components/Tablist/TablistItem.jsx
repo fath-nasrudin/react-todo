@@ -8,11 +8,11 @@ export const TablistItem = ({ item, handleTabClick, activeTab }) => {
     <li
       className={`px-2 rounded-sm  cursor-pointer ${
         activeTab === item.id ? 'bg-red-200' : 'hover:bg-gray-200'
-      } flex`}
+      } flex justify-between`}
       onClick={handleTabClick}
       data-tabid={item.id}
     >
-      <div className="mr-auto">{item.name}</div>
+      {item.name}
 
       {/* settings */}
       {!item.default && (

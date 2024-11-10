@@ -26,6 +26,7 @@ export const projectReducer = (state, action) => {
 
 const ProjectStateContext = createContext(createInitialProjectState());
 const ProjectDispatchContext = createContext();
+const DefaultTabIdContext = createContext();
 
 export const ProjectProvider = ({ children }) => {
   const [state, dispatch] = useReducer(
@@ -37,7 +38,9 @@ export const ProjectProvider = ({ children }) => {
   return (
     <ProjectStateContext.Provider value={state}>
       <ProjectDispatchContext.Provider value={dispatch}>
-        {children}
+        <DefaultTabIdContext.Provider value={createInitialProjectState()[0].id}>
+          {children}
+        </DefaultTabIdContext.Provider>
       </ProjectDispatchContext.Provider>
     </ProjectStateContext.Provider>
   );
@@ -45,3 +48,4 @@ export const ProjectProvider = ({ children }) => {
 
 export const useProjectState = () => useContext(ProjectStateContext);
 export const useProjectDispatch = () => useContext(ProjectDispatchContext);
+export const useDefaultTabId = () => useContext(DefaultTabIdContext);
