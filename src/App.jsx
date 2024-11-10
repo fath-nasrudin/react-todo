@@ -7,17 +7,18 @@ import { AddProjectForm } from './components/AddProjectForm.jsx';
 import {
   projectReducer,
   createInitialProjectState,
+  useProjectState,
+  useProjectDispatch,
 } from '../reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
 
-const Leftbar = ({
-  activeTab,
-  handleTabClick,
-  defaultTabs,
-  projects,
-  dispatchProject,
-}) => {
+const Leftbar = ({ activeTab, handleTabClick }) => {
   const [showForm, setShowForm] = useState(false);
+  const allProjects = useProjectState();
+  const dispatchProject = useProjectDispatch();
+
+  const defaultTabs = allProjects.filter((p) => p.default === true);
+  const projects = allProjects.filter((p) => p.default !== true);
 
   return (
     <>
@@ -27,12 +28,14 @@ const Leftbar = ({
           cancelAction={() => setShowForm(false)}
         />
       )}
+
       <div className="hidden sm:block basis-[300px] grow-0 shrink-0 bg-gray-100 pt-8">
         <Tablist
           tabsData={defaultTabs}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
+
         <div className="mt-8">
           <div className="flex px-4">
             <div className="mr-auto font-semibold">Projects</div>
@@ -44,6 +47,7 @@ const Leftbar = ({
               />
             </button>
           </div>
+
           <Tablist
             tabsData={projects}
             handleTabClick={handleTabClick}
@@ -55,25 +59,16 @@ const Leftbar = ({
   );
 };
 
-const Mainbar = ({ activeTab, projects }) => {
+const Mainbar = ({ activeTab }) => {
   return (
     <div className="flex-1 p-4">
-      <TaskList projects={projects} activeTab={activeTab} />
+      <TaskList activeTab={activeTab} />
     </div>
   );
 };
 
 function App() {
-  const [allProjects, dispatchProject] = useReducer(
-    projectReducer,
-    null,
-    createInitialProjectState
-  );
-
-  const defaultTabs = [allProjects[0]];
-  const projects = allProjects.filter((p) => p.id !== defaultTabs[0].id);
-
-  const [activeTab, setActiveTab] = useState(() => allProjects[0].id);
+  const [activeTab, setActiveTab] = useState('');
 
   const handleTabClick = (e) => {
     setActiveTab(e.target.dataset.tabid);
@@ -81,14 +76,8 @@ function App() {
 
   return (
     <div className="flex min-h-screen">
-      <Leftbar
-        activeTab={activeTab}
-        handleTabClick={handleTabClick}
-        defaultTabs={defaultTabs}
-        projects={projects}
-        dispatchProject={dispatchProject}
-      />
-      <Mainbar projects={allProjects} activeTab={activeTab} />
+      <Leftbar activeTab={activeTab} handleTabClick={handleTabClick} />
+      <Mainbar activeTab={activeTab} />
     </div>
   );
 }

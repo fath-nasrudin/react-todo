@@ -3,9 +3,11 @@ import {
   tasksActions,
   useTaskDispatch,
 } from '../../../reducers/task.reducer.jsx';
+import { useProjectState } from '../../../reducers/project.reducer.jsx';
 
-export const UpdateTaskForm = ({ projects, data, cancelHandler }) => {
+export const UpdateTaskForm = ({ data, cancelHandler }) => {
   const taskDispatch = useTaskDispatch();
+  const projects = useProjectState();
   const [taskData, setTaskData] = useState(data);
   const handleInputChange = (e) => {
     setTaskData({ ...taskData, [e.target.name]: e.target.value });

@@ -1,7 +1,9 @@
-import { PencilLineIcon } from 'lucide-react';
-import { Trash2Icon } from 'lucide-react';
+import { useProjectDispatch } from './../../../reducers/project.reducer';
+import { PencilLineIcon, Trash2Icon } from 'lucide-react';
 
 export const TablistItem = ({ item, handleTabClick, activeTab }) => {
+  const projectDispatch = useProjectDispatch();
+
   return (
     <li
       className={`px-2 rounded-sm  cursor-pointer ${

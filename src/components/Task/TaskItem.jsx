@@ -7,7 +7,7 @@ import {
 import { Trash2Icon } from 'lucide-react';
 import { UpdateTaskForm } from './UpdateTaskForm.jsx';
 
-export const TaskItem = ({ item, projects }) => {
+export const TaskItem = ({ item }) => {
   const [isEdit, setIsEdit] = useState(false);
   const taskDispatch = useTaskDispatch();
 
@@ -17,7 +17,6 @@ export const TaskItem = ({ item, projects }) => {
         <UpdateTaskForm
           taskDispatch={taskDispatch}
           data={item}
-          projects={projects}
           cancelHandler={() => setIsEdit(false)}
         />
       )}

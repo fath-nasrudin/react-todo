@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { projectActions } from '../../reducers/project.reducer';
+import {
+  projectActions,
+  useProjectDispatch,
+} from '../../reducers/project.reducer';
 
-export const AddProjectForm = ({ cancelAction, dispatchProject }) => {
+export const AddProjectForm = ({ cancelAction }) => {
+  const dispatchProject = useProjectDispatch();
   const data = { name: '' };
   const [projectData, setProjectData] = useState(data);
   const handleInputChange = (e) => {

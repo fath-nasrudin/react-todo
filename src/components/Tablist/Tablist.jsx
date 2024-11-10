@@ -1,6 +1,6 @@
 import { TablistItem } from './TablistItem';
 
-export const Tablist = ({ tabsData, handleTabClick, activeTab }) => {
+export const Tablist = ({ handleTabClick, activeTab, tabsData }) => {
   return (
     <ul className="px-4">
       {tabsData.map((item) => (
