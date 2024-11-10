@@ -8,7 +8,7 @@ const Mainbar = ({ showLeftbar, setShowLeftbar, setShowMobileLeftbar }) => {
   return (
     <div className="flex-1 p-4 max-w-screen-md mx-auto ">
       {/* header */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center border-b-[1px] border-b-gray-300">
         {/* desktop button */}
         <button
           className={`hidden ${!showLeftbar ? 'sm:block' : ''}`}
