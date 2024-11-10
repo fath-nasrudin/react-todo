@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 
 export const tasksActions = {
@@ -7,12 +8,20 @@ export const tasksActions = {
   DELETE_TASK_BY_PROJECTID: 'task/delete_by_project_id',
 };
 
-export const createInitialTaskState = () => [
-  { id: '1', name: 'work on something 1', isDone: false, projectId: '1' },
-  { id: '2', name: 'work on something 2', isDone: true, projectId: '1' },
-  { id: '3', name: 'work on something 3', isDone: false, projectId: '2' },
-  { id: '4', name: 'work on something 4', isDone: true, projectId: '1' },
-];
+export const createInitialTaskState = () => {
+  const savedTasks = localStorage.getItem('tasks');
+
+  if (savedTasks) {
+    return JSON.parse(savedTasks);
+  }
+
+  return [
+    { id: '1', name: 'work on something 1', isDone: false, projectId: '1' },
+    { id: '2', name: 'work on something 2', isDone: true, projectId: '1' },
+    { id: '3', name: 'work on something 3', isDone: false, projectId: '2' },
+    { id: '4', name: 'work on something 4', isDone: true, projectId: '1' },
+  ];
+};
 
 export const taskReducer = (state, action) => {
   switch (action.type) {
@@ -60,6 +69,10 @@ export const TaskProvider = ({ children }) => {
     null,
     createInitialTaskState
   );
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(state));
+  }, [state]);
 
   return (
     <TaskStateContext.Provider value={state}>

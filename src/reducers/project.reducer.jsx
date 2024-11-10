@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 
-export const createInitialProjectState = () => [
-  { id: '1', name: 'Inbox', default: true },
-  { id: '2', name: 'Works' },
-  { id: '3', name: 'Home' },
-];
+export const createInitialProjectState = () => {
+  const savedProjects = localStorage.getItem('projects');
+  if (savedProjects) {
+    return JSON.parse(savedProjects);
+  }
+  return [
+    { id: '1', name: 'Inbox', default: true },
+    { id: '2', name: 'Works' },
+    { id: '3', name: 'Home' },
+  ];
+};
 
 export const projectActions = {
   ADD_PROJECT: 'project/add',
@@ -47,6 +54,10 @@ export const ProjectProvider = ({ children }) => {
     null,
     createInitialProjectState
   );
+
+  useEffect(() => {
+    localStorage.setItem('projects', JSON.stringify(state));
+  }, [state]);
 
   return (
     <ProjectStateContext.Provider value={state}>
