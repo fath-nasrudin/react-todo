@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PencilLineIcon } from 'lucide-react';
 import { tasksActions } from '../../../reducers/task.reducer';
+import { Trash2Icon } from 'lucide-react';
 
 const TaskItem = ({ item, taskDispatch, projects }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -33,6 +34,21 @@ const TaskItem = ({ item, taskDispatch, projects }) => {
           <div className="flex items-center">
             <button onClick={() => setIsEdit(true)}>
               <PencilLineIcon
+                strokeWidth={1}
+                size={28}
+                className="p-1 text-gray-400 hover:text-gray-500 hover:bg-gray-300"
+              />
+            </button>
+            <button
+              onClick={() => {
+                // dispatch delete task action
+                taskDispatch({
+                  type: tasksActions.DELETE_TASK,
+                  taskId: item.id,
+                });
+              }}
+            >
+              <Trash2Icon
                 strokeWidth={1}
                 size={28}
                 className="p-1 text-gray-400 hover:text-gray-500 hover:bg-gray-300"
