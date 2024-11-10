@@ -4,9 +4,14 @@ import {
   useProjectDispatch,
 } from './../reducers/project.reducer';
 
-export const AddProjectForm = ({ cancelAction }) => {
+export const AddProjectForm = ({ cancelAction, project = null }) => {
   const dispatchProject = useProjectDispatch();
-  const data = { name: '' };
+  let data;
+  if (project) {
+    data = project;
+  } else {
+    data = { name: '' };
+  }
   const [projectData, setProjectData] = useState(data);
   const handleInputChange = (e) => {
     setProjectData({ ...projectData, [e.target.name]: e.target.value });
@@ -48,17 +53,28 @@ export const AddProjectForm = ({ cancelAction }) => {
               disabled={!projectData.name}
               onClick={(e) => {
                 e.preventDefault();
+
+                // if add
                 // dispatch add project
-                dispatchProject({
-                  type: projectActions.ADD_PROJECT,
-                  value: projectData,
-                });
+                if (project) {
+                  dispatchProject({
+                    type: projectActions.UPDATE_PROJECT,
+                    payload: projectData,
+                  });
+                } else {
+                  dispatchProject({
+                    type: projectActions.ADD_PROJECT,
+                    value: projectData,
+                  });
+                }
+                // if edit
+
                 // reset form
                 setProjectData(data);
                 cancelAction();
               }}
             >
-              Add Project
+              {project ? 'Save' : 'Add'}
             </button>
           </div>
         </form>

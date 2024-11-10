@@ -21,6 +21,15 @@ export const projectReducer = (state, action) => {
     return [...state, newProject];
   }
 
+  if (action.type === projectActions.UPDATE_PROJECT) {
+    return state.map((p) => {
+      if (p.id === action.payload.id) {
+        return { ...p, ...action.payload };
+      }
+      return p;
+    });
+  }
+
   if (action.type === projectActions.DELETE_PROJECT) {
     return state.filter((s) => s.id !== action.payload.projectId);
   }
