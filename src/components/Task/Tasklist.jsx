@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { PencilLineIcon } from 'lucide-react';
-import { tasksActions } from '../../../reducers/task.reducer';
+import {
+  tasksActions,
+  useTaskDispatch,
+  useTaskState,
+} from '../../../reducers/task.reducer.jsx';
 import { Trash2Icon } from 'lucide-react';
 
-const TaskItem = ({ item, taskDispatch, projects }) => {
+const TaskItem = ({ item, projects }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const taskDispatch = useTaskDispatch();
+
   return (
     <>
       {isEdit && (
@@ -61,7 +67,8 @@ const TaskItem = ({ item, taskDispatch, projects }) => {
   );
 };
 
-const UpdateTaskForm = ({ taskDispatch, projects, data, cancelHandler }) => {
+const UpdateTaskForm = ({ projects, data, cancelHandler }) => {
+  const taskDispatch = useTaskDispatch();
   const [taskData, setTaskData] = useState(data);
   const handleInputChange = (e) => {
     setTaskData({ ...taskData, [e.target.name]: e.target.value });
@@ -136,15 +143,10 @@ const UpdateTaskForm = ({ taskDispatch, projects, data, cancelHandler }) => {
   );
 };
 
-const AddTaskForm = ({
-  taskDispatch,
-  projects,
-  activeTab,
-  cancelAction,
-  data = null,
-}) => {
+const AddTaskForm = ({ projects, activeTab, cancelAction, data = null }) => {
   if (!data) data = { name: '', projectId: '' };
   const [taskData, setTaskData] = useState(data);
+  const taskDispatch = useTaskDispatch();
   const handleInputChange = (e) => {
     setTaskData({ ...taskData, [e.target.name]: e.target.value });
   };
@@ -218,7 +220,7 @@ const AddTaskForm = ({
   );
 };
 
-const AddTask = ({ taskDispatch, projects, activeTab }) => {
+const AddTask = ({ projects, activeTab }) => {
   const [isOpen, setIsOpen] = useState(false);
   const cancelAction = () => {
     setIsOpen(false);
@@ -240,7 +242,6 @@ const AddTask = ({ taskDispatch, projects, activeTab }) => {
         <AddTaskForm
           activeTab={activeTab}
           projects={projects}
-          taskDispatch={taskDispatch}
           cancelAction={cancelAction}
         />
       )}
@@ -248,7 +249,9 @@ const AddTask = ({ taskDispatch, projects, activeTab }) => {
   );
 };
 
-export const TaskList = ({ tasks, taskDispatch, activeTab, projects }) => {
+export const TaskList = ({ activeTab, projects }) => {
+  const tasks = useTaskState();
+  const taskDispatch = useTaskDispatch();
   const filteredTasks = tasks.filter((item) => item.projectId === activeTab);
   return (
     <div>

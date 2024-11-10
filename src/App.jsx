@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import { useState } from 'react';
 import { TaskList } from './components/Task/Tasklist';
 import { Tablist } from './components/Tablist/Tablist';
-import { taskReducer, createInitialTaskState } from '../reducers/task.reducer';
+
 import {
   projectReducer,
   createInitialProjectState,
@@ -117,17 +117,10 @@ const Leftbar = ({
   );
 };
 
-const Mainbar = ({ tasks, taskDispatch, activeTab, projects }) => {
-  // update task
-
+const Mainbar = ({ activeTab, projects }) => {
   return (
     <div className="flex-1 p-4">
-      <TaskList
-        projects={projects}
-        activeTab={activeTab}
-        tasks={tasks}
-        taskDispatch={taskDispatch}
-      />
+      <TaskList projects={projects} activeTab={activeTab} />
     </div>
   );
 };
@@ -144,12 +137,6 @@ function App() {
 
   const [activeTab, setActiveTab] = useState(() => allProjects[0].id);
 
-  const [tasks, taskDispatch] = useReducer(
-    taskReducer,
-    null,
-    createInitialTaskState
-  );
-
   const handleTabClick = (e) => {
     setActiveTab(e.target.dataset.tabid);
   };
@@ -163,12 +150,7 @@ function App() {
         projects={projects}
         dispatchProject={dispatchProject}
       />
-      <Mainbar
-        projects={allProjects}
-        activeTab={activeTab}
-        tasks={tasks}
-        taskDispatch={taskDispatch}
-      />
+      <Mainbar projects={allProjects} activeTab={activeTab} />
     </div>
   );
 }

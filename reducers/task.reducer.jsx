@@ -1,3 +1,5 @@
+import { createContext, useContext, useReducer } from 'react';
+
 export const tasksActions = {
   UPDATE_TASK: 'task/update',
   ADD_TASK: 'task/add',
@@ -41,3 +43,25 @@ export const taskReducer = (state, action) => {
       throw Error('Unknown action.');
   }
 };
+
+const TaskStateContext = createContext(createInitialTaskState());
+const TaskDispatchContext = createContext();
+
+export const TaskProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(
+    taskReducer,
+    null,
+    createInitialTaskState
+  );
+
+  return (
+    <TaskStateContext.Provider value={state}>
+      <TaskDispatchContext.Provider value={dispatch}>
+        {children}
+      </TaskDispatchContext.Provider>
+    </TaskStateContext.Provider>
+  );
+};
+
+export const useTaskState = () => useContext(TaskStateContext);
+export const useTaskDispatch = () => useContext(TaskDispatchContext);
