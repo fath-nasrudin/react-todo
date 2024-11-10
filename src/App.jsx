@@ -1,114 +1,77 @@
+import { useReducer } from 'react';
 import { useState } from 'react';
+import { TaskList } from './components/Task/Tasklist';
+import { Tablist } from './components/Tablist/Tablist';
+import { taskReducer, createInitialTaskState } from '../reducers/task.reducer';
 
-const TablistItem = ({ item, handleClick, activeTab }) => {
-  return (
-    <li
-      className={`px-2 rounded-sm  cursor-pointer ${
-        activeTab === item.id ? 'bg-red-200' : 'hover:bg-gray-200'
-      } `}
-      onClick={handleClick}
-      data-tabid={item.id}
-    >
-      {item.name}
-    </li>
-  );
-};
+const createInitialProjectState = () => [
+  { id: '1', name: 'Inbox' },
+  { id: '2', name: 'Works' },
+  { id: '3', name: 'Home' },
+];
 
-const Tablist = ({ tabsData, handleClick, activeTab }) => {
-  return (
-    <ul className="px-4">
-      {tabsData.map((item) => (
-        <TablistItem
-          handleClick={handleClick}
-          key={item.id}
-          item={item}
-          activeTab={activeTab}
-        />
-      ))}
-    </ul>
-  );
-};
+const projectReducer = (state, action) => {};
 
-const Leftbar = () => {
-  const [activeTab, setActiveTab] = useState(null);
-  const handleClick = (e) => {
-    setActiveTab(e.target.dataset.tabid);
-  };
-
-  const tabsData = [
-    { id: '1', name: 'Inbox' },
-    { id: '2', name: 'Works' },
-    { id: '3', name: 'Home' },
-  ];
-
-  const tabsData2 = [
-    { id: '4', name: 'Inbox' },
-    { id: '5', name: 'Works' },
-    { id: '6', name: 'Home' },
-  ];
+const Leftbar = ({ activeTab, handleTabClick, tabsData, projectDispatch }) => {
   return (
     <div className="hidden sm:block basis-[300px] grow-0 shrink-0 bg-gray-100 pt-8">
       <Tablist
         tabsData={tabsData}
-        handleClick={handleClick}
-        activeTab={activeTab}
-      />
-
-      <Tablist
-        tabsData={tabsData2}
-        handleClick={handleClick}
+        handleTabClick={handleTabClick}
         activeTab={activeTab}
       />
     </div>
   );
 };
 
-const TaskItem = ({ item }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  return (
-    <li className="p-2 border-b-[1px] border-b-slate-200 flex gap-4 items-center">
-      <input
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => {
-          setIsChecked((prev) => !prev);
-          // dispatch an action
-        }}
-      />
-      <div className={`${isChecked ? 'line-through' : null}`}>{item.name}</div>
-    </li>
-  );
-};
-
-const initializeTasks = () => [
-  { id: '1', name: 'work on something 1', projectId: '1' },
-  { id: '2', name: 'work on something 2', projectId: '1' },
-  { id: '3', name: 'work on something 3', projectId: '2' },
-  { id: '4', name: 'work on something 4', projectId: '1' },
-];
-
-const Mainbar = () => {
-  const [tasks, setTasks] = useState(initializeTasks);
-
+const Mainbar = ({ tasks, taskDispatch, activeTab, projects }) => {
   // update task
+
   return (
     <div className="flex-1 p-4">
-      <ul>
-        {tasks
-          // .filter((item) => item.projectId === '1')
-          .map((item) => (
-            <TaskItem key={item.id} item={item} />
-          ))}
-      </ul>
+      <TaskList
+        projects={projects}
+        activeTab={activeTab}
+        tasks={tasks}
+        taskDispatch={taskDispatch}
+      />
     </div>
   );
 };
 
 function App() {
+  const [tabsData, projectDispatch] = useReducer(
+    projectReducer,
+    null,
+    createInitialProjectState
+  );
+
+  const [activeTab, setActiveTab] = useState(() => tabsData[0].id);
+
+  const [tasks, taskDispatch] = useReducer(
+    taskReducer,
+    null,
+    createInitialTaskState
+  );
+
+  const handleTabClick = (e) => {
+    setActiveTab(e.target.dataset.tabid);
+  };
+
   return (
     <div className="flex min-h-screen">
-      <Leftbar />
-      <Mainbar />
+      <Leftbar
+        activeTab={activeTab}
+        handleTabClick={handleTabClick}
+        tabsData={tabsData}
+        projectDispatch={projectDispatch}
+      />
+      <Mainbar
+        projects={tabsData}
+        activeTab={activeTab}
+        tasks={tasks}
+        taskDispatch={taskDispatch}
+      />
     </div>
   );
 }
