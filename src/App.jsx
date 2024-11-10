@@ -10,7 +10,7 @@ import {
 } from '../reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
 
-const Leftbar = ({ handleTabClick }) => {
+const Leftbar = () => {
   const [showForm, setShowForm] = useState(false);
   const allProjects = useProjectState();
   const dispatchProject = useProjectDispatch();
@@ -28,7 +28,7 @@ const Leftbar = ({ handleTabClick }) => {
       )}
 
       <div className="hidden sm:block basis-[300px] grow-0 shrink-0 bg-gray-100 pt-8">
-        <Tablist tabsData={defaultTabs} handleTabClick={handleTabClick} />
+        <Tablist tabsData={defaultTabs} />
 
         <div className="mt-8">
           <div className="flex px-4">
@@ -42,7 +42,7 @@ const Leftbar = ({ handleTabClick }) => {
             </button>
           </div>
 
-          <Tablist tabsData={projects} handleTabClick={handleTabClick} />
+          <Tablist tabsData={projects} />
         </div>
       </div>
     </>
@@ -58,15 +58,9 @@ const Mainbar = () => {
 };
 
 function App() {
-  const setActiveTab = useActiveTabSet();
-
-  const handleTabClick = (e) => {
-    setActiveTab(e.target.dataset.tabid);
-  };
-
   return (
     <div className="flex min-h-screen">
-      <Leftbar handleTabClick={handleTabClick} />
+      <Leftbar />
       <Mainbar />
     </div>
   );

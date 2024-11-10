@@ -10,7 +10,9 @@ export const ActiveTabProvider = ({ children }) => {
   const [state, setState] = useState(defaultTab);
   return (
     <ActiveTabStateContext.Provider value={state}>
-      <ActiveTabSetContext.Provider value={setState}>
+      <ActiveTabSetContext.Provider
+        value={{ set: setState, reset: () => setState(defaultTab) }}
+      >
         {children}
       </ActiveTabSetContext.Provider>
     </ActiveTabStateContext.Provider>

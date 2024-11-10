@@ -4,6 +4,7 @@ export const tasksActions = {
   UPDATE_TASK: 'task/update',
   ADD_TASK: 'task/add',
   DELETE_TASK: 'task/delete',
+  DELETE_TASK_BY_PROJECTID: 'task/delete_by_project_id',
 };
 
 export const createInitialTaskState = () => [
@@ -37,6 +38,12 @@ export const taskReducer = (state, action) => {
 
     case tasksActions.DELETE_TASK: {
       return state.filter((task) => task.id !== action.taskId);
+    }
+
+    case tasksActions.DELETE_TASK_BY_PROJECTID: {
+      return state.filter(
+        (task) => task.projectId !== action.payload.projectId
+      );
     }
 
     default:

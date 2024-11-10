@@ -21,6 +21,10 @@ export const projectReducer = (state, action) => {
     return [...state, newProject];
   }
 
+  if (action.type === projectActions.DELETE_PROJECT) {
+    return state.filter((s) => s.id !== action.payload.projectId);
+  }
+
   throw Error('Project Action unknown');
 };
 

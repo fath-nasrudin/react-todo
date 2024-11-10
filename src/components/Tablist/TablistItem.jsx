@@ -1,17 +1,26 @@
-import { useActiveTabState } from '../../../reducers/activeTab.context';
-import { useProjectDispatch } from './../../../reducers/project.reducer';
+import {
+  useActiveTabSet,
+  useActiveTabState,
+} from '../../../reducers/activeTab.context';
+import { tasksActions, useTaskDispatch } from '../../../reducers/task.reducer';
+import {
+  projectActions,
+  useProjectDispatch,
+} from './../../../reducers/project.reducer';
 import { PencilLineIcon, Trash2Icon } from 'lucide-react';
 
-export const TablistItem = ({ item, handleTabClick }) => {
+export const TablistItem = ({ item }) => {
   const projectDispatch = useProjectDispatch();
+  const taskDispatch = useTaskDispatch();
   const activeTab = useActiveTabState();
+  const { set: setActiveTab, reset: resetActiveTab } = useActiveTabSet();
 
   return (
     <li
       className={`px-2 rounded-sm  cursor-pointer ${
         activeTab === item.id ? 'bg-red-200' : 'hover:bg-gray-200'
       } flex justify-between`}
-      onClick={handleTabClick}
+      onClick={(e) => setActiveTab(e.target.dataset.tabid)}
       data-tabid={item.id}
     >
       {item.name}
@@ -35,10 +44,19 @@ export const TablistItem = ({ item, handleTabClick }) => {
             onClick={(e) => {
               e.stopPropagation();
               // dispatch delete task action
-              // taskDispatch({
-              //   type: tasksActions.DELETE_TASK,
-              //   taskId: item.id,
-              // });
+              projectDispatch({
+                type: projectActions.DELETE_PROJECT,
+                payload: { projectId: item.id },
+              });
+
+              // delete related tasks
+              taskDispatch({
+                type: tasksActions.DELETE_TASK_BY_PROJECTID,
+                payload: { projectId: item.id },
+              });
+
+              //
+              resetActiveTab();
             }}
           >
             <Trash2Icon
