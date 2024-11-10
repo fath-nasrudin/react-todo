@@ -1,12 +1,12 @@
 import {
   useActiveTabSet,
   useActiveTabState,
-} from '../../../reducers/activeTab.context';
-import { tasksActions, useTaskDispatch } from '../../../reducers/task.reducer';
+} from './../../reducers/activeTab.context';
+import { tasksActions, useTaskDispatch } from './../../reducers/task.reducer';
 import {
   projectActions,
   useProjectDispatch,
-} from './../../../reducers/project.reducer';
+} from './../../reducers/project.reducer';
 import { PencilLineIcon, Trash2Icon } from 'lucide-react';
 
 export const TablistItem = ({ item }) => {

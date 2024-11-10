@@ -1,4 +1,3 @@
-import { useActiveTabState } from '../../../reducers/activeTab.context';
 import { TablistItem } from './TablistItem';
 
 export const Tablist = ({ tabsData }) => {

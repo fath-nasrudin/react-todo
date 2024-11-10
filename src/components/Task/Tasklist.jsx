@@ -1,8 +1,8 @@
-import { useTaskState } from '../../../reducers/task.reducer.jsx';
+import { useTaskState } from './../../reducers/task.reducer.jsx';
 
 import { TaskItem } from './TaskItem.jsx';
 import { AddTask } from './AddTask.jsx';
-import { useActiveTabState } from '../../../reducers/activeTab.context.jsx';
+import { useActiveTabState } from './../../reducers/activeTab.context.jsx';
 
 export const TaskList = () => {
   const activeTab = useActiveTabState();

@@ -3,7 +3,7 @@ import { PencilLineIcon } from 'lucide-react';
 import {
   tasksActions,
   useTaskDispatch,
-} from '../../../reducers/task.reducer.jsx';
+} from './../../reducers/task.reducer.jsx';
 import { Trash2Icon } from 'lucide-react';
 import { UpdateTaskForm } from './UpdateTaskForm.jsx';
 

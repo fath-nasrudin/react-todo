@@ -2,9 +2,9 @@ import { useState } from 'react';
 import {
   tasksActions,
   useTaskDispatch,
-} from '../../../reducers/task.reducer.jsx';
-import { useActiveTabState } from '../../../reducers/activeTab.context.jsx';
-import { useProjectState } from '../../../reducers/project.reducer.jsx';
+} from './../../reducers/task.reducer.jsx';
+import { useActiveTabState } from './../../reducers/activeTab.context.jsx';
+import { useProjectState } from './../../reducers/project.reducer.jsx';
 
 export const AddTaskForm = ({ cancelAction, data = null }) => {
   const activeTab = useActiveTabState();

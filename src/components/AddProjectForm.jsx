@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   projectActions,
   useProjectDispatch,
-} from '../../reducers/project.reducer';
+} from './../reducers/project.reducer';
 
 export const AddProjectForm = ({ cancelAction }) => {
   const dispatchProject = useProjectDispatch();

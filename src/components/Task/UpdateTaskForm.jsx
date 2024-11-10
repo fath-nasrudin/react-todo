@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {
   tasksActions,
   useTaskDispatch,
-} from '../../../reducers/task.reducer.jsx';
-import { useProjectState } from '../../../reducers/project.reducer.jsx';
+} from './../../reducers/task.reducer.jsx';
+import { useProjectState } from './../../reducers/project.reducer.jsx';
 
 export const UpdateTaskForm = ({ data, cancelHandler }) => {
   const taskDispatch = useTaskDispatch();

@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { useActiveTabSet } from '../reducers/activeTab.context.jsx';
 import { TaskList } from './components/Task/Tasklist';
 import { Tablist } from './components/Tablist/Tablist';
 import { AddProjectForm } from './components/AddProjectForm.jsx';
-
 import {
   useProjectState,
   useProjectDispatch,
-} from '../reducers/project.reducer';
+} from './reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
 
 const Leftbar = () => {
