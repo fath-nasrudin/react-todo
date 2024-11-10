@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import { TaskList } from './components/Task/Tasklist';
-import { Tablist } from './components/Tablist/Tablist';
-import { AddProjectForm } from './components/AddProjectForm.jsx';
-import {
-  useProjectState,
-  useProjectDispatch,
-} from './reducers/project.reducer';
-import { PlusIcon } from 'lucide-react';
 import { PanelLeftIcon } from 'lucide-react';
 import { Leftbar } from './components/Leftbar.jsx';
 import { MobileLeftbar } from './components/MobileLeftbar.jsx';
 
 const Mainbar = ({ showLeftbar, setShowLeftbar, setShowMobileLeftbar }) => {
   return (
-    <div className="flex-1 p-4">
+    <div className="flex-1 p-4 max-w-screen-md mx-auto ">
+      {/* header */}
       <div className="flex gap-4 items-center">
         {/* desktop button */}
         <button

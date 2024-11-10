@@ -27,7 +27,7 @@ export const TablistItem = ({ item }) => {
         />
       )}
       <li
-        className={`px-2 rounded-sm  cursor-pointer ${
+        className={`p-2 rounded-md  cursor-pointer ${
           activeTab === item.id ? 'bg-red-200' : 'hover:bg-gray-200'
         } flex justify-between`}
         onClick={(e) => setActiveTab(e.target.dataset.tabid)}

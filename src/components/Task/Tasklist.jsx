@@ -3,14 +3,18 @@ import { useTaskState } from './../../reducers/task.reducer.jsx';
 import { TaskItem } from './TaskItem.jsx';
 import { AddTask } from './AddTask.jsx';
 import { useActiveTabState } from './../../reducers/activeTab.context.jsx';
+import { useProjectState } from '../../reducers/project.reducer.jsx';
 
 export const TaskList = () => {
   const activeTab = useActiveTabState();
   const tasks = useTaskState();
+  const projects = useProjectState();
+  const currentTab = projects.find((p) => p.id === activeTab);
 
   const filteredTasks = tasks.filter((item) => item.projectId === activeTab);
   return (
-    <div>
+    <div className="mt-8">
+      <div className="text-3xl font-bold">{currentTab.name}</div>
       <ul>
         {filteredTasks.length ? (
           filteredTasks.map((item) => <TaskItem key={item.id} item={item} />)

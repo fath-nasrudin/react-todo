@@ -21,7 +21,7 @@ export const TaskItem = ({ item }) => {
         />
       )}
       {!isEdit && (
-        <li className="p-2 border-b-[1px] border-b-slate-200 flex gap-4 items-center">
+        <li className="p-4 border-b-[1px] border-b-slate-200 flex gap-4 items-center">
           <input
             type="checkbox"
             checked={item.isDone}
