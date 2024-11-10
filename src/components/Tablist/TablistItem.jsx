@@ -1,8 +1,10 @@
+import { useActiveTabState } from '../../../reducers/activeTab.context';
 import { useProjectDispatch } from './../../../reducers/project.reducer';
 import { PencilLineIcon, Trash2Icon } from 'lucide-react';
 
-export const TablistItem = ({ item, handleTabClick, activeTab }) => {
+export const TablistItem = ({ item, handleTabClick }) => {
   const projectDispatch = useProjectDispatch();
+  const activeTab = useActiveTabState();
 
   return (
     <li

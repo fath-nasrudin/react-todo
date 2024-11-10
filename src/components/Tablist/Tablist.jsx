@@ -1,6 +1,7 @@
+import { useActiveTabState } from '../../../reducers/activeTab.context';
 import { TablistItem } from './TablistItem';
 
-export const Tablist = ({ handleTabClick, activeTab, tabsData }) => {
+export const Tablist = ({ handleTabClick, tabsData }) => {
   return (
     <ul className="px-4">
       {tabsData.map((item) => (
@@ -8,7 +9,6 @@ export const Tablist = ({ handleTabClick, activeTab, tabsData }) => {
           handleTabClick={handleTabClick}
           key={item.id}
           item={item}
-          activeTab={activeTab}
         />
       ))}
     </ul>

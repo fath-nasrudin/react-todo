@@ -2,9 +2,12 @@ import { useTaskState } from '../../../reducers/task.reducer.jsx';
 
 import { TaskItem } from './TaskItem.jsx';
 import { AddTask } from './AddTask.jsx';
+import { useActiveTabState } from '../../../reducers/activeTab.context.jsx';
 
-export const TaskList = ({ activeTab }) => {
+export const TaskList = () => {
+  const activeTab = useActiveTabState();
   const tasks = useTaskState();
+
   const filteredTasks = tasks.filter((item) => item.projectId === activeTab);
   return (
     <div>

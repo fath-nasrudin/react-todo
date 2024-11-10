@@ -1,19 +1,16 @@
-import { useReducer } from 'react';
 import { useState } from 'react';
+import { useActiveTabSet } from '../reducers/activeTab.context.jsx';
 import { TaskList } from './components/Task/Tasklist';
 import { Tablist } from './components/Tablist/Tablist';
 import { AddProjectForm } from './components/AddProjectForm.jsx';
 
 import {
-  projectReducer,
-  createInitialProjectState,
   useProjectState,
   useProjectDispatch,
-  useDefaultTabId,
 } from '../reducers/project.reducer';
 import { PlusIcon } from 'lucide-react';
 
-const Leftbar = ({ activeTab, handleTabClick }) => {
+const Leftbar = ({ handleTabClick }) => {
   const [showForm, setShowForm] = useState(false);
   const allProjects = useProjectState();
   const dispatchProject = useProjectDispatch();
@@ -31,11 +28,7 @@ const Leftbar = ({ activeTab, handleTabClick }) => {
       )}
 
       <div className="hidden sm:block basis-[300px] grow-0 shrink-0 bg-gray-100 pt-8">
-        <Tablist
-          tabsData={defaultTabs}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-        />
+        <Tablist tabsData={defaultTabs} handleTabClick={handleTabClick} />
 
         <div className="mt-8">
           <div className="flex px-4">
@@ -49,27 +42,23 @@ const Leftbar = ({ activeTab, handleTabClick }) => {
             </button>
           </div>
 
-          <Tablist
-            tabsData={projects}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-          />
+          <Tablist tabsData={projects} handleTabClick={handleTabClick} />
         </div>
       </div>
     </>
   );
 };
 
-const Mainbar = ({ activeTab }) => {
+const Mainbar = () => {
   return (
     <div className="flex-1 p-4">
-      <TaskList activeTab={activeTab} />
+      <TaskList />
     </div>
   );
 };
 
 function App() {
-  const [activeTab, setActiveTab] = useState(useDefaultTabId());
+  const setActiveTab = useActiveTabSet();
 
   const handleTabClick = (e) => {
     setActiveTab(e.target.dataset.tabid);
@@ -77,8 +66,8 @@ function App() {
 
   return (
     <div className="flex min-h-screen">
-      <Leftbar activeTab={activeTab} handleTabClick={handleTabClick} />
-      <Mainbar activeTab={activeTab} />
+      <Leftbar handleTabClick={handleTabClick} />
+      <Mainbar />
     </div>
   );
 }
