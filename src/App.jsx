@@ -33,7 +33,7 @@ const Mainbar = ({ showLeftbar, setShowLeftbar, setShowMobileLeftbar }) => {
 
 function App() {
   const [showLeftbar, setShowLeftbar] = useState(true);
-  const [showMobileLeftbar, setShowMobileLeftbar] = useState(true);
+  const [showMobileLeftbar, setShowMobileLeftbar] = useState(false);
   return (
     <div className="flex min-h-screen">
       <Leftbar showLeftbar={showLeftbar} setShowLeftbar={setShowLeftbar} />
