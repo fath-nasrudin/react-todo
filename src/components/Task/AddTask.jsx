@@ -3,13 +3,12 @@ import {
   tasksActions,
   useTaskDispatch,
 } from '../../../reducers/task.reducer.jsx';
+import { useActiveTabState } from '../../../reducers/activeTab.context.jsx';
+import { useProjectState } from '../../../reducers/project.reducer.jsx';
 
-export const AddTaskForm = ({
-  projects,
-  activeTab,
-  cancelAction,
-  data = null,
-}) => {
+export const AddTaskForm = ({ cancelAction, data = null }) => {
+  const activeTab = useActiveTabState();
+  const projects = useProjectState();
   if (!data) data = { name: '', projectId: '' };
   const [taskData, setTaskData] = useState(data);
   const taskDispatch = useTaskDispatch();
